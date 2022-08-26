@@ -32,13 +32,9 @@ int main()
     bool yellow = false;
     bool red = false;
 
-    auto condYellow = [&]() { return yellow; };
-    auto condRed = [&]() { return red; };
-    auto condGreen = [&]() { return green; };
-
-    trafficLights.RegisterTransition(TrafficLightsState::Green, TrafficLightsState::Yellow, condYellow);
-    trafficLights.RegisterTransition(TrafficLightsState::Yellow, TrafficLightsState::Red, condRed);
-    trafficLights.RegisterTransition(TrafficLightsState::Red, TrafficLightsState::Green, condGreen);
+    trafficLights.RegisterTransition(TrafficLightsState::Green, TrafficLightsState::Yellow, [&]() { return yellow; });
+    trafficLights.RegisterTransition(TrafficLightsState::Yellow, TrafficLightsState::Red, [&]() { return red; });
+    trafficLights.RegisterTransition(TrafficLightsState::Red, TrafficLightsState::Green, [&]() { return green; });
 
     trafficLights.Start(TrafficLightsState::Green);
 
