@@ -10,6 +10,7 @@ class FiniteStateMachine
 {
     //static_assert(std::is_enum_v<StateEnumType>); // requires C++17
 
+public:
     // nested classes are public so we can unit test them
     struct State;
     struct Transition
@@ -44,6 +45,7 @@ class FiniteStateMachine
         }
     };
 
+private:
     State* _currentState = nullptr;
     std::unordered_map<StateEnumType, State*> _registeredStates;
 
@@ -57,7 +59,7 @@ public:
     }
 
     bool isStarted() const { return _currentState != nullptr; }
-    StateEnumType currentState() const { return _currentState != nullptr ? _currentState.Value : StateEnumType(); }
+    StateEnumType currentState() const { return _currentState != nullptr ? _currentState->Value : StateEnumType(); }
 
     // we need to expose it for unit tests
     const std::unordered_map<StateEnumType, State*>& registeredStates() const { return _registeredStates; }
